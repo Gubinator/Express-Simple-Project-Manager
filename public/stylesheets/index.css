@@ -1,0 +1,5 @@
+.section__form{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
+}

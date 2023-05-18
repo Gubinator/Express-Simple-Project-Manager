@@ -4,10 +4,10 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   const locals = {
-    title: "Express",
-    primjer: "Primjer"
+    title: "Project manager",
   }
   res.render('index', locals );
 });
+
 
 module.exports = router;
