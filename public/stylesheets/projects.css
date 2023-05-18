@@ -1,0 +1,29 @@
+.wrapper{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+a{
+    text-decoration: none;
+    padding: 0 1rem 0 1rem;
+}
+
+.section__form{
+    display: flex;
+    flex-flow: column wrap;
+    width: 30%;
+}
+
+.section__form span{
+    padding-bottom: 0.25rem;
+}
+
+.section__form input{
+    margin-bottom: 0.85rem;
+}
+
+.form__button--submit{
+    margin-top: 1rem;
+    width: 4rem;
+}

@@ -1,0 +1,12 @@
+extends ../layout
+block projects_all
+  
+  div(class="wrapper")
+    nav
+        a(href="/projects/") Add project
+        span |
+        a(href="/") Home
+    form(action='/projects/all' method='GET' class="section__form")
+        h1 All projects
+        
+    

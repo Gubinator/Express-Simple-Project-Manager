@@ -6,12 +6,12 @@ router.get('/', function(req, res, next) {
     title: "Express",
     primjer: "Primjer"
   }
-  res.render('projects', locals );
+  res.render('projects/index', locals );
 });
 
 const Project = require('../models/projectModel')
 
-router.post('/projects' , async(req, res) => {
+router.post('/' , async(req, res) => {
   try {
     const project = await Project.create(req.body)
     res.status(200).json(project);
@@ -21,12 +21,17 @@ router.post('/projects' , async(req, res) => {
   }
 })
 
-router.get('/projects', async(req, res) => {
+router.get('/all', async(req, res) => {
+  const locals = {
+    title: "Express",
+    primjer: "Primjer"
+  }
   try {
     const projects = await Project.find({});
   } catch (error) {
     res.status(500).json({message: error.message})
   }
+  res.render('projects/all', locals );
 })
 
 router.get('/projects/:id', async(req, res) => {
