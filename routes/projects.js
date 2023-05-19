@@ -15,6 +15,7 @@ router.post('/add' , async(req, res) => {
 
   var projectData = new Project(req.body);
   projectData.save().then(item=>{
+    res.render('projects/');
     res.send("Item saved to the database");
   })
   .catch(err => {
@@ -24,16 +25,23 @@ router.post('/add' , async(req, res) => {
 });
 
 router.get('/all', async(req, res) => {
-  const locals = {
-    title: "Express",
-    primjer: "Primjer"
-  }
+
   try {
     const projects = await Project.find({});
+    res.format({
+      html: function() {
+        res.render('projects/all', {
+          title: 'All my Projects',
+          projects: projects
+        });
+      },
+      json: function() {
+        res.json(projects);
+      }
+    });
   } catch (error) {
     res.status(500).json({message: error.message})
   }
-  res.render('projects/all', locals );
 })
 
 router.get('/projects/:id', async(req, res) => {

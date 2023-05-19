@@ -1,12 +1,23 @@
 extends ../layout
 block projects_all
   
-  div(class="wrapper")
+  div.wrapper
     nav
         a(href="/projects/") Add project
         span |
-        a(href="/") Home
-    form(action='/projects/all' method='GET' class="section__form")
-        h1 All projects
+        a(href="/") Home 
+    div.list__section
+      h1 #{title}
+      - each project, i in projects
+            ul
+              li Project name: #{project.project_name}
+              li Project description: #{project.project_description}
+              li Project tasks: #{project.project_tasks}
+              li Project price: #{project.project_price}
+              li Project members:
+              form(action="/projects/:id", method='GET')
+                input(type="hidden", name="id")
+                button(type="submit") Edit
+
         
     
