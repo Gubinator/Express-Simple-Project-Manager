@@ -24,10 +24,6 @@ const projectSchema = mongoose.Schema({
     project_end_date : {
         type: Date,
         required: [true, "Please add end date"]
-    },
-    project_participant : {
-        type: String,
-        required: false
     }
 }, {
     timestamps: true

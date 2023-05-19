@@ -26,4 +26,5 @@ a{
 .form__button--submit{
     margin-top: 1rem;
     width: 4rem;
+    height: 2rem;
 }

@@ -11,15 +11,17 @@ router.get('/', function(req, res, next) {
 
 const Project = require('../models/projectModel')
 
-router.post('/' , async(req, res) => {
-  try {
-    const project = await Project.create(req.body)
-    res.status(200).json(project);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({message: error.message})
-  }
-})
+router.post('/add' , async(req, res) => {
+
+  var projectData = new Project(req.body);
+  projectData.save().then(item=>{
+    res.send("Item saved to the database");
+  })
+  .catch(err => {
+    console.log(err.message);
+    res.status(400).send("Unable to save to database");
+  });
+});
 
 router.get('/all', async(req, res) => {
   const locals = {
