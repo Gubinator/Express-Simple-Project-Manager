@@ -1,0 +1,24 @@
+extends ../layout
+block projects_all
+  
+  div.wrapper
+    nav
+        a(href="/projects/") Add project
+        span |
+        a(href="/projects/all") All projects
+        span |
+        a(href="/") Home
+    div.list__section
+      h1 #{title}
+      ul
+        li Project name: #{project.project_name}
+        li Project description: #{project.project_description}
+        li Project tasks: #{project.project_tasks}
+        li Project price: #{project.project_price}
+        li Project members:
+        form(action="/projects/:id", method='PUT')
+          input(type="hidden", name="id")
+          button(type="submit") Update
+
+        
+    

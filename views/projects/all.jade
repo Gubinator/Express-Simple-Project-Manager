@@ -10,13 +10,13 @@ block projects_all
       h1 #{title}
       - each project, i in projects
             ul
+              li Project id: #{project._id}
               li Project name: #{project.project_name}
               li Project description: #{project.project_description}
               li Project tasks: #{project.project_tasks}
               li Project price: #{project.project_price}
               li Project members:
-              form(action="/projects/:id", method='GET')
-                input(type="hidden", name="id")
+              form(action="/projects/"+project._id, method='GET')
                 button(type="submit") Edit
 
         

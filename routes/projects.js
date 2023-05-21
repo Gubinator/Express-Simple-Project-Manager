@@ -44,10 +44,23 @@ router.get('/all', async(req, res) => {
   }
 })
 
-router.get('/projects/:id', async(req, res) => {
+
+router.get('/:id', async(req, res) => {
   try {
     const {id} = req.params;
-    const project = await Project.find(id);
+    const project = await Project.findById(id);
+
+    res.format({
+      html: function() {
+        res.render('projects/show', {
+          title: 'Project '+project.project_name,
+          project: project
+        });
+      },
+      json: function() {
+        res.json(project);
+      }
+    });
   } catch (error) {
     res.setMaxListeners(500).json({message: error.message})
   }
