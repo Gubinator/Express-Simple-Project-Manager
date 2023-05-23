@@ -20,6 +20,7 @@ block projects_all
               li(class="section__date") Project start date: #{project.project_start_date}
               li(class="section__date") Project end date: #{project.project_end_date}
               li Project members:
+                span #{project.project_members}
               form(action="/projects/#{project._id}", method='GET')
                 button(type="submit") Edit
               

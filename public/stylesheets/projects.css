@@ -29,8 +29,13 @@ a{
     height: 2rem;
 }
 
-.list__section, .project-info__section, .project-add__section{
+.list__section, .project-info__section{
     margin-top: 6rem;
+    width: 30%;
+}
+
+.project-add__section{
+    margin-top: 2rem;
     width: 30%;
 }
 
