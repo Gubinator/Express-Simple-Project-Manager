@@ -1,6 +1,8 @@
 extends ../layout
 block projects_all
   
+
+
   div.wrapper
     nav
         a(href="/projects/") Add project
@@ -10,14 +12,17 @@ block projects_all
       h1 #{title}
       - each project, i in projects
             ul
-              li Project id: #{project._id}
+              li(style="opacity:0.6;") Project id: #{project._id}
               li Project name: #{project.project_name}
               li Project description: #{project.project_description}
               li Project tasks: #{project.project_tasks}
-              li Project price: #{project.project_price}
+              li Project price ($): #{project.project_price}
+              li(class="section__date") Project start date: #{project.project_start_date}
+              li(class="section__date") Project end date: #{project.project_end_date}
               li Project members:
-              form(action="/projects/"+project._id, method='GET')
+              form(action="/projects/#{project._id}", method='GET')
                 button(type="submit") Edit
+              
 
         
     
