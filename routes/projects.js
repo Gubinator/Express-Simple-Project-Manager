@@ -80,13 +80,6 @@ router.all('/delete/:id', async (req, res) => {
 });
 
 
-/*project.update({
-  project_name : name,
-  project_description : badge,
-  project_tasks : dob,
-  project_start_date : isloved
-  project_end_date:*/
-
 router.all('/update/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -114,22 +107,15 @@ router.all('/update/:id', async (req, res) => {
   }
 });
 
+router.post('/add-member/:id', async(req, res) => {
+  let id = req.params.id;
+  let member = req.body.project_member;
+  let currentProject = await Project.findById(id);
+  currentProject.project_members.push(member);
+  currentProject.save();
+  res.redirect('back');
+})
+
 
 module.exports = router;
 
-    /*const updatedProject = new Project(req.body);
-    var project_name = req.body.project_name;
-    var project_description = req.body.project_description;
-    var project_tasks = req.body.project_tasks;
-    var project_price = req.body.project_price;
-    var project_start_date = req.body.project_start_date;
-    var project_end_date = req.body.project_end_date;
-    
-    var currentProject = await Project.findById(id);
-    currentProject.project_name = project_name;
-    currentProject.project_description = project_description;
-    currentProject.project_tasks = project_tasks;
-    currentProject.project_price = project_price;
-    currentProject.project_start_date = project_start_date;
-    currentProject.project_end_date = project_end_date;
-    await currentProject.save() */

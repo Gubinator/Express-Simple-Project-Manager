@@ -29,17 +29,17 @@ a{
     height: 2rem;
 }
 
-.list__section, .project-info__section{
+.list__section, .project-info__section, .project-add__section{
     margin-top: 6rem;
     width: 30%;
 }
 
-.list__section ul, .project-info__section ul{
+.list__section ul, .project-info__section ul, .project-add__section ul{
     border: 1px solid #00000038;
     padding: 0.75rem 1rem 1rem 0.75rem;
 }
 
-.list__section ul li, .project-info__section ul li{
+.list__section ul li, .project-info__section ul li, .project-add__section ul li{
     min-height: 2rem;
 }
 
