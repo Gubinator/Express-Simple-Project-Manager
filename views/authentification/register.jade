@@ -1,0 +1,21 @@
+extends ../layout
+
+block authentification_register
+  h1= title
+  p Welcome to #{title}
+  a(href="/users/login" style="padding-left:0;") Login
+  a(href="/" style="padding-left:0;") Home
+  div(class="register__section")
+    form(action="/users/register" method="POST")
+      ul 
+        li
+         label Username
+         input(type="text" name="name" required)
+        li
+         label Email
+         input(type="email" name="email" required)
+        li
+         label Password 
+         input(type="text" name="password" required)
+        li 
+         button(type="submit") Submit

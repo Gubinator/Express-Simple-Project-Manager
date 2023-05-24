@@ -1,0 +1,22 @@
+.register__section{
+    margin-top: 2rem;
+    border: 1px solid #00000038;
+    width: 20%;
+}
+
+.register__section form ul{
+ display:flex;
+ flex-flow: column wrap;
+ padding: 0 1.25rem 0 1.25rem;
+ row-gap: 0.5rem;
+}
+
+.register__section form ul li{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+   }
+
+.register_section form ul li input{
+    width: 15%;
+}
