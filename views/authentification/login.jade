@@ -2,6 +2,7 @@ extends ../layout
 
 block authentification_login
   h1= title
+  h1= pass
   p Welcome to #{title}
   a(href="/users/register" style="padding-left:0;") Register
   a(href="/" style="padding-left:0;") Home
@@ -9,10 +10,10 @@ block authentification_login
     form(action="/users/login" method="POST")
       ul 
         li
-         label Username
-         input(type="text" name="name" required)
+         label Email
+         input(type="email" name="email" required)
         li
          label Password 
-         input(type="text" name="password" required)
+         input(type="password" name="password" required)
         li 
          button(type="submit") Submit
