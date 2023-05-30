@@ -3,12 +3,13 @@ var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var projectRouter = require('./routes/projects');
 const { error } = require('console');
 
 var app = express();
@@ -16,13 +17,23 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const projectRouter = require('./routes/projects');
+app.use(session({
+  secret : process.env.SECRET_KEY,
+  cookie : { maxAge : 3000000 }, //3000s
+  resave : false,
+  saveUninitialized : false,
+  store : new session.MemoryStore({
+    checkPeriod: 100000 // 100s
+  })
+}))
+
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -41,6 +52,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 mongoose.set("strictQuery", false)
 mongoose.connect('mongodb+srv://admin:root@projectmanager.tmkcbrx.mongodb.net/Node-API?retryWrites=true&w=majority')

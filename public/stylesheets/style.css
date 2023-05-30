@@ -13,3 +13,14 @@ a {
 ul{
   list-style-type: none;
 }
+
+header{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: end;
+}
+
+header .link--logout{
+  padding-bottom: 1rem;
+  text-align: end;
+}

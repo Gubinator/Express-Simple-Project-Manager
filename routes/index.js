@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   const locals = {
     title: "Project manager",
+    session : req.session
   }
   res.render('index', locals );
 });

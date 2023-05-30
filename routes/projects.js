@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const Project = require('../models/projectModel');
+var auth = require('../middleware/auth');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.isAuthorized, async(req, res) => {
   const locals = {
     title: "Express",
     primjer: "Primjer"
@@ -9,9 +11,9 @@ router.get('/', function(req, res, next) {
   res.render('projects/index', locals );
 });
 
-const Project = require('../models/projectModel')
 
-router.post('/add' , async(req, res) => {
+
+router.post('/add', async(req, res) => {
 
   var projectData = new Project(req.body);
   projectData.save().then(item=>{ 
@@ -23,7 +25,7 @@ router.post('/add' , async(req, res) => {
   });
 });
 
-router.get('/all', async(req, res) => {
+router.get('/all', auth.isAuthorized, async(req, res) => {
 
   try {
     const projects = await Project.find({});
@@ -44,7 +46,7 @@ router.get('/all', async(req, res) => {
 })
 
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', auth.isAuthorized, async(req, res) => {
   try {
     const {id} = req.params;
     const project = await Project.findById(id);

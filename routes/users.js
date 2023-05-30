@@ -1,14 +1,24 @@
+require('dotenv').config(); 
 var express = require('express');
 var router = express.Router();
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt');
-const { error } = require('jquery');
+const Project = require('../models/projectModel');
+const uuidv4 = require('uuid').v4;
+router.use(express.json());
+var auth = require('../middleware/auth');
+
 
 //User.collection.drop();
 
+
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    res.send(req.session);
 });
+
+router.get('/s', function(req, res, next){
+  res.send(req.session);
+})
 
 router.get('/register', async(req, res) =>{
   const locals = {
@@ -35,8 +45,9 @@ router.post('/register', async(req, res) => {
         email : req.body.email,
         password : hashedPassword
       });
+
       newUser.save();
-      res.redirect('/users/login');
+      res.redirect('login');
     } catch(error) {
       res.status(500).json({message: error.message})
     }
@@ -45,17 +56,22 @@ router.post('/register', async(req, res) => {
   } 
 });
 
+
 router.post('/login', async(req, res) => {
  try{
     const selectedUser = await User.find({email : req.body.email});
     // Because JSON that I get back is in format like this;  [{...}]  hence [0]
     const encryptedPassword = selectedUser[0].password;
+    const username = selectedUser[0].name;
     // No elements in array means that user is not created
+
     if(selectedUser.length==0){
       res.send("There is no registered user with that email.");
     } else{
       if(await bcrypt.compare(req.body.password, encryptedPassword)){
-        res.send("Works");
+        session=req.session;
+        session.userid=username;
+        res.redirect('/projects');
       }
       res.send("Does not");
     }
@@ -64,6 +80,13 @@ router.post('/login', async(req, res) => {
   }
 })
 
-
+router.all('/logout', async(req, res) => {
+  try{
+    req.session.destroy();
+    res.redirect('/users/login')
+  } catch(err) {
+    res.send(err);
+  }
+})
 
 module.exports = router;
