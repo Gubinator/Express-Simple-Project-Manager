@@ -52,6 +52,10 @@ a{
     padding-bottom: 0.5rem;
 }
 
+.list__section .section__members span{
+    margin-right: 0.5rem;
+}
+
 .project-info__section .section__button--update{
     padding-bottom: 0.5rem;
 }
@@ -64,6 +68,19 @@ a{
 
 .project-info__section .section__date input{
     margin-bottom: 0.5rem;
+}
+
+.wrapper .section__form .form__checkbox--members{
+    max-width: 50%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wrapper .section__form .form__checkbox--members label{
+    padding-right: 0.5rem;
+}
+.wrapper .section__form .form__checkbox--members input{
+    margin-right: 1.25rem;
 }
 
 

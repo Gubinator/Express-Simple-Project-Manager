@@ -18,8 +18,11 @@ block projects
         input(type="number" name="project_price" required)
         span Project tasks: 
         input(type="textarea" name="project_tasks" required)
-        //span Add to team: 
-        //input(type="text" name="project_participant" required)
+        span Add to team: 
+        div(class="form__checkbox--members")
+          - each user, i in users 
+            label #{user.name}
+            input(type="checkbox" name="project_members" value="#{user.name}") 
         span Project start date: 
         input(type="date" name="project_start_date" required)
         span Project end date: 

@@ -31,6 +31,10 @@ const projectSchema = mongoose.Schema({
     project_is_archived : {
         type: Boolean,
         required : true
+    },
+    project_user_id : {
+        type: String,
+        required : true
     }
 }, {
     timestamps: true

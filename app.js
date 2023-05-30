@@ -29,7 +29,7 @@ app.use(session({
   resave : false,
   saveUninitialized : false,
   store : new session.MemoryStore({
-    checkPeriod: 100000 // 100s
+    checkPeriod: 10000000 // 10000s
   })
 }))
 

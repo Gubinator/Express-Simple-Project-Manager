@@ -21,8 +21,9 @@ block projects_all
               li Project price ($): #{project.project_price}
               li(class="section__date") Project start date: #{project.project_start_date}
               li(class="section__date") Project end date: #{project.project_end_date}
-              li Project members:
-                span #{project.project_members}
+              li(class="section__members") Project members:
+                - each member, i in project.project_members
+                  span #{member}
               form(action="/projects/#{project._id}", method='GET')
                 button(type="submit") Edit
               
