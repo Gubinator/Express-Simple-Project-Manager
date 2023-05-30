@@ -27,6 +27,10 @@ const projectSchema = mongoose.Schema({
     },
     project_members : {
         type: Array
+    },
+    project_is_archived : {
+        type: Boolean,
+        required : true
     }
 }, {
     timestamps: true

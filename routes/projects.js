@@ -11,7 +11,7 @@ router.get('/', auth.isAuthorized, async(req, res) => {
   res.render('projects/index', locals );
 });
 
-
+//Project.collection.drop();
 
 router.post('/add', async(req, res) => {
 

@@ -80,7 +80,7 @@ router.post('/login', async(req, res) => {
   }
 })
 
-router.all('/logout', async(req, res) => {
+router.all('/logout', auth.isAuthorized, async(req, res) => {
   try{
     req.session.destroy();
     res.redirect('/users/login')
