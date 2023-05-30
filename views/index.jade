@@ -3,7 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  a(href="/projects" style="padding-left:0;") Go to projects
+  div(class="column")
+    a(href="/users/login" style="padding-left:0;") Login
+    a(href="/users/register" style="padding-left:0;") Register
+    a(href="/archive" style="padding-left:0;") Archive
 
     
   

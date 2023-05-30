@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const Project = require('../models/projectModel');
 var auth = require('../middleware/auth');
+var Archive = require('../models/archiveModel');
+var User = require('../models/userModel');
 
 router.get('/', auth.isAuthorized, async(req, res) => {
   const locals = {
@@ -13,16 +15,27 @@ router.get('/', auth.isAuthorized, async(req, res) => {
 
 //Project.collection.drop();
 
-router.post('/add', async(req, res) => {
+router.post('/add', auth.isAuthorized, async(req, res) => {
 
   var projectData = new Project(req.body);
-  projectData.save().then(item=>{ 
+  projectData.save();
+  if(req.body.project_is_archived==true){
+    var addArchiveLead = new Archive({
+      project_name : req.body.project_name,
+      project_member_name : req.session.userid,
+      project_member_type : "leader"
+    })
+    addArchiveLead.save().then(item =>{
+      res.redirect("/projects/all")
+    }).catch(err => {
+      console.log(err.message);
+      res.status(400).send("Unable to save to database");
+    });
+  } else {
     res.redirect("/projects/all")
-  })
-  .catch(err => {
-    console.log(err.message);
-    res.status(400).send("Unable to save to database");
-  });
+  }
+
+
 });
 
 router.get('/all', auth.isAuthorized, async(req, res) => {
@@ -117,6 +130,7 @@ router.post('/add-member/:id', async(req, res) => {
   currentProject.save();
   res.redirect('back');
 })
+
 
 
 module.exports = router;

@@ -12,10 +12,6 @@ const archiveSchema = mongoose.Schema({
     project_member_type : {
         type: String,
         required: [true, "Please add member type"]
-    },
-    project_added_date : {
-        type: String,
-        required: [true, "Please specify project tasks"]
     }
 }, {
     timestamps: true

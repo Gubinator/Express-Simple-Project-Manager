@@ -13,7 +13,7 @@ var auth = require('../middleware/auth');
 
 
 router.get('/', function(req, res, next) {
-    res.send(req.session);
+    res.send(req.session.userid);
 });
 
 router.get('/s', function(req, res, next){

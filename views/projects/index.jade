@@ -24,5 +24,11 @@ block projects
         input(type="date" name="project_start_date" required)
         span Project end date: 
         input(type="date" name="project_end_date" required)
+        span Project archived :
+        div
+          span Yes 
+            input(type="radio" name="project_is_archived" value="true")
+          span(style="padding-left:1rem;") No 
+            input(type="radio" name="project_is_archived" value="false")
         button(type="submit" class="form__button--submit" value="Submit") Submit
     

@@ -1,0 +1,21 @@
+extends layout
+block archive
+
+  div.wrapper
+    nav
+        a(href="/projects/") Add project
+        span |
+        a(href="/") Home 
+    div.list__section
+      h1 #{title}
+      - each project, i in everythingArchived
+            ul
+              li Project name: #{project.project_name}
+              li Project member name: #{project.project_member_name}
+              li Project member role: #{project.project_member_type}
+              li(class="section__date") Project added date: #{project.createdAt}
+
+              
+
+        
+    
