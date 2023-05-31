@@ -70,7 +70,7 @@ router.post('/login', async(req, res) => {
       if(await bcrypt.compare(req.body.password, encryptedPassword)){
         session=req.session;
         session.userid=username;
-        res.redirect('/projects');
+        return res.redirect('/projects');
       }
       res.send("Password does not match, try again!");
     }
