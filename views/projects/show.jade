@@ -14,22 +14,40 @@ block projects_show
       h1 #{title}
       ul
         form(action="/projects/update/#{project._id}" method='POST' class="section__button--update")
-          li Project name: 
-            input(type="text" value="#{project.project_name}" name="project_name")  
-          li Project description: 
-            input(type="text" value="#{project.project_description}" name="project_description")  
-          li Project tasks: 
-            input(type="text" value="#{project.project_tasks}" name="project_tasks")
-          li Project price ($): 
-            input(type="number" value="#{project.project_price}" name="project_price")
-          li(class="section__date") Project start date:
-            - const initialStartDate = new Date(project.project_start_date).toLocaleDateString('en-CA')
-            input(type="date" name="project_start_date" value=initialStartDate)
-          li(class="section__date") Project end date: 
-            - const initialEndDate = new Date(project.project_end_date).toLocaleDateString('en-CA')
-            input(type="date" required name="project_end_date" value=initialEndDate)
-          li Project members:
-            span  #{project.project_members}
+          if role=="leader"
+            li Project name: 
+              input(type="text" value="#{project.project_name}" name="project_name")  
+            li Project description: 
+              input(type="text" value="#{project.project_description}" name="project_description")  
+            li Project tasks: 
+              input(type="text" value="#{project.project_tasks}" name="project_tasks")
+            li Project price ($): 
+              input(type="number" value="#{project.project_price}" name="project_price")
+            li(class="section__date") Project start date:
+              - const initialStartDate = new Date(project.project_start_date).toLocaleDateString('en-CA')
+              input(type="date" name="project_start_date" value=initialStartDate)
+            li(class="section__date") Project end date: 
+              - const initialEndDate = new Date(project.project_end_date).toLocaleDateString('en-CA')
+              input(type="date" required name="project_end_date" value=initialEndDate)
+            li Project members:
+              span  #{project.project_members}
+          else 
+            li Project name: 
+              input(type="text" value="#{project.project_name}" name="project_name" disabled)  
+            li Project description: 
+              input(type="text" value="#{project.project_description}" name="project_description" disabled)  
+            li Project tasks: 
+              input(type="text" value="#{project.project_tasks}" name="project_tasks" )
+            li Project price ($): 
+              input(type="number" value="#{project.project_price}" name="project_price" disabled)
+            li(class="section__date") Project start date:
+              - const initialStartDate = new Date(project.project_start_date).toLocaleDateString('en-CA')
+              input(type="date" name="project_start_date" value=initialStartDate disabled)
+            li(class="section__date") Project end date: 
+              - const initialEndDate = new Date(project.project_end_date).toLocaleDateString('en-CA')
+              input(type="date" required name="project_end_date" value=initialEndDate disabled)
+            li Project members:
+              span  #{project.project_members}
           button(type="submit") Update
         form(action="/projects/delete/#{project._id}" method='POST' class="section__button--delete")
           button(type="submit") Delete
@@ -38,11 +56,15 @@ block projects_show
       ul
         form(action="/projects/add-member/#{project._id}" method='POST' class="section__button--add")
           li Add project member:
-          li(class="form__checkbox--members")
-            - each member, i in members 
-              label #{member.name}
-              input(type="checkbox" name="project_members" value="#{member.name}" style="margin-right: 0.5rem;") 
-          button(type="submit") Add 
+          if members.length!=0
+            li(class="form__checkbox--members")
+              - each member, i in members 
+                label #{member.name}
+                input(type="checkbox" name="project_members" value="#{member.name}" style="margin-right: 0.5rem;") 
+            button(type="submit") Add 
+          else 
+            li
+              span There are no available members
 
         
     

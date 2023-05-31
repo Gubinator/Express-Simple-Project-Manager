@@ -7,27 +7,47 @@ block projects_all
     nav
         a(href="/projects/") Add project
         span |
-        a(href="/") Home 
+        a(href="/archive") Archive
         span |
         a( href="/users/logout") Logout
-        span |
-        a(href="/archive") Archive
     div.list__section
-      h1 #{title}
-      - each project, i in projects
-            ul
-              li(style="opacity:0.6;") Project id: #{project._id}
-              li Project name: #{project.project_name}
-              li Project description: #{project.project_description}
-              li Project tasks: #{project.project_tasks}
-              li Project price ($): #{project.project_price}
-              li(class="section__date") Project start date: #{project.project_start_date}
-              li(class="section__date") Project end date: #{project.project_end_date}
-              li(class="section__members") Project members:
-                - each member, i in project.project_members
-                  span #{member}
-              form(action="/projects/#{project._id}", method='GET')
-                button(type="submit") Edit
+      h1 #{titleLeader}
+      if projects.length != 0
+        - each project, i in projects
+              ul
+                li(style="opacity:0.6;") Project id: #{project._id}
+                li Project name: #{project.project_name}
+                li Project description: #{project.project_description}
+                li Project tasks: #{project.project_tasks}
+                li Project price ($): #{project.project_price}
+                li(class="section__date") Project start date: #{project.project_start_date}
+                li(class="section__date") Project end date: #{project.project_end_date}
+                li(class="section__members") Project members:
+                  - each member, i in project.project_members
+                    span #{member}
+                form(action="/projects/#{project._id}", method='GET')
+                  button(type="submit") Edit
+      else 
+        h3 There are no projects where your role is : "leader"
+    div.list__section
+      h1 #{titleMember}
+      if memberProjects.length!=0
+        - each project, i in memberProjects
+              ul
+                li(style="opacity:0.6;") Project id: #{project._id}
+                li Project name: #{project.project_name}
+                li Project description: #{project.project_description}
+                li Project tasks: #{project.project_tasks}
+                li Project price ($): #{project.project_price}
+                li(class="section__date") Project start date: #{project.project_start_date}
+                li(class="section__date") Project end date: #{project.project_end_date}
+                li(class="section__members") Project members:
+                  - each member, i in project.project_members
+                    span #{member}
+                form(action="/projects/#{project._id}", method='GET')
+                  button(type="submit") Edit
+      else 
+        h3 There are no projects where your role is : "member"
               
 
         

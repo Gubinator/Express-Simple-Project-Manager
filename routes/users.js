@@ -64,7 +64,6 @@ router.post('/login', async(req, res) => {
     const encryptedPassword = selectedUser[0].password;
     const username = selectedUser[0].name;
     // No elements in array means that user is not created
-
     if(selectedUser.length==0){
       res.send("There is no registered user with that email.");
     } else{
@@ -73,10 +72,10 @@ router.post('/login', async(req, res) => {
         session.userid=username;
         res.redirect('/projects');
       }
-      res.send("Does not");
+      res.send("Password does not match, try again!");
     }
-  } catch(error) {
-    res.status(500);
+  } catch {
+    res.send("There is no user in database with specified email.");
   }
 })
 

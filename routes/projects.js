@@ -5,24 +5,6 @@ var auth = require('../middleware/auth');
 var Archive = require('../models/archiveModel');
 var User = require('../models/userModel');
 
-
-router.get('/mod', auth.isAuthorized,  async(req, res) => {
-
-  var users = await User.find().where('name').ne(req.session.userid);
-  /*var count = 0;
-  var string = "";
-  const projects = await Project.find({project_user_id : req.session.userid});
-  const archive = await Archive.find({});
-  var filterProjects = [];
-  archive.forEach(element => {
-    if(element.project_member_name==req.session.userid){
-      filterProjects.push(element.project_name)
-    }
-  });*/
-
-  res.send(users);
-})
-
 router.get('/', auth.isAuthorized, async(req, res) => {
   var otherUsers = await User.find().where('name').ne(req.session.userid);
   const locals = {
@@ -41,23 +23,32 @@ router.post('/add', auth.isAuthorized, async(req, res) => {
   var addedMembers = req.body.project_members;
   var projectData = new Project(req.body);
   projectData.project_user_id = req.session.userid;
-  projectData.save();
+  await projectData.save();
   if(req.body.project_is_archived=="true"){
     var addArchiveLead = new Archive({
       project_name : req.body.project_name,
       project_member_name : req.session.userid,
       project_member_type : "leader"
     });
-    addArchiveLead.save();
+    await addArchiveLead.save();
     if(addedMembers){
-      addedMembers.forEach(element => {
+      if(Array.isArray(addedMembers)){
+        addedMembers.forEach(element => {
+          var addArchiveMember = new Archive({
+            project_name : req.body.project_name,
+            project_member_name : element,
+            project_member_type : "member"
+          })
+          addArchiveMember.save();
+        });
+      } else {
         var addArchiveMember = new Archive({
           project_name : req.body.project_name,
-          project_member_name : element,
+          project_member_name : addedMembers,
           project_member_type : "member"
         })
         addArchiveMember.save();
-      });
+      }
     }
   } 
     res.redirect("/projects/all")
@@ -65,12 +56,18 @@ router.post('/add', auth.isAuthorized, async(req, res) => {
 
 router.get('/all', auth.isAuthorized, async(req, res) => {
   try {
-    const projects = await Project.find({});
+
+    const username = req.session.userid;
+    // All projects concerning user
+    const projects = await Project.find({project_user_id : username });
+    const memberProjects = await Project.find({project_members : username })
     res.format({
       html: function() {
         res.render('projects/all', {
-          title: 'All projects',
-          projects: projects
+          titleLeader: 'All projects - leader',
+          titleMember: 'All projects - member',
+          projects: projects,
+          memberProjects : memberProjects
         });
       },
       json: function() {
@@ -90,14 +87,16 @@ router.get('/:id', auth.isAuthorized, async(req, res) => {
     const projectMembers = project.project_members;
     const projectOwner = await User.find({name : project.project_user_id});
     projectMembers.push(projectOwner[0].name);
-    const otherMembers = await User.find({}).where("name").nin(projectMembers); 
+    const otherMembers = await User.find({}).where("name").nin(projectMembers);
+    const role = projectOwner[0].name == req.session.userid ? "leader" : "member"; 
 
     res.format({
       html: function() {
         res.render('projects/show', {
           title : 'Project '+project.project_name,
           project : project,
-          members : otherMembers 
+          members : otherMembers ,
+          role : role
         });
       },
       json: function() {
