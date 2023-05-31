@@ -7,7 +7,7 @@ block projects_show
         span |
         a(href="/projects/all") All projects
         span |
-        a(href="/") Home
+        a(href="/archive") Archive
         span |
         a(href="/users/logout") Logout
     div.project-info__section
@@ -38,7 +38,10 @@ block projects_show
       ul
         form(action="/projects/add-member/#{project._id}" method='POST' class="section__button--add")
           li Add project member:
-          input(type="text" name="project_member")
+          li(class="form__checkbox--members")
+            - each member, i in members 
+              label #{member.name}
+              input(type="checkbox" name="project_members" value="#{member.name}" style="margin-right: 0.5rem;") 
           button(type="submit") Add 
 
         

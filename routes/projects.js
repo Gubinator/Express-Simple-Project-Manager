@@ -87,12 +87,17 @@ router.get('/:id', auth.isAuthorized, async(req, res) => {
   try {
     const {id} = req.params;
     const project = await Project.findById(id);
+    const projectMembers = project.project_members;
+    const projectOwner = await User.find({name : project.project_user_id});
+    projectMembers.push(projectOwner[0].name);
+    const otherMembers = await User.find({}).where("name").nin(projectMembers); 
 
     res.format({
       html: function() {
         res.render('projects/show', {
-          title: 'Project '+project.project_name,
-          project: project
+          title : 'Project '+project.project_name,
+          project : project,
+          members : otherMembers 
         });
       },
       json: function() {
@@ -147,12 +152,14 @@ router.all('/update/:id', async (req, res) => {
 });
 
 router.post('/add-member/:id', async(req, res) => {
-  let id = req.params.id;
-  let member = req.body.project_member;
-  let currentProject = await Project.findById(id);
-  currentProject.project_members.push(member);
-  currentProject.save();
-  res.redirect('back');
+  if(req.body.projectMembers!=null){
+    let id = req.params.id;
+    let member = req.body.project_members;
+    let currentProject = await Project.findById(id);
+    currentProject.project_members.push(member);
+    currentProject.save();
+    res.redirect('/projects/'+id);
+  }
 })
 
 

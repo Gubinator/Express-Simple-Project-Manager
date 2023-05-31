@@ -5,7 +5,7 @@ block projects
     nav
         a(href="/projects/all") All projects 
         span |
-        a(href="/") Home
+        a(href="/archive") Archive
         span |
         a( href="/users/logout") Logout
     form(action='/projects/add' method='POST' class="section__form")
@@ -30,7 +30,7 @@ block projects
         span Project archived :
         div
           span Yes 
-            input(type="radio" name="project_is_archived" value="true")
+            input(type="radio" name="project_is_archived" value="true" checked)
           span(style="padding-left:1rem;") No 
             input(type="radio" name="project_is_archived" value="false")
         button(type="submit" class="form__button--submit" value="Submit") Submit
